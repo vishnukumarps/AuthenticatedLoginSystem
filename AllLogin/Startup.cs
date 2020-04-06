@@ -12,6 +12,8 @@ using AllLogin.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using  Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 
 namespace AllLogin
 {
@@ -65,6 +67,18 @@ namespace AllLogin
                 microsoftOptions.ClientId = "dd3984b3-c5e9-4869-96c5-f33dff88a373";
                 microsoftOptions.ClientSecret = "BObuc_Jtuus6Eg.swKK8_44uphMAC/hJ";
             });
+
+
+            services.AddAuthentication().AddGitHub(gitOptions =>
+            {
+                gitOptions.ClientId = "c4eb5e2a565f7706b0b9";
+                gitOptions.ClientSecret = "44bf29549fe2954dd982d04b718b2205b0a073bd";
+              //  gitOptions.CallbackPath = new PathString("/signin-github");
+                //   gitOptions.AuthorizationEndpoint = "";
+
+
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,8 +99,10 @@ namespace AllLogin
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
+          //  app.UseOAuthAuthentication(GihubOption);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
